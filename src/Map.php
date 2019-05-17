@@ -3,6 +3,7 @@
 namespace Pavinthan\NovaMap;
 
 use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Map extends Field
 {
@@ -25,6 +26,32 @@ class Map extends Field
         parent::__construct($name, $attribute, $resolveCallback);
 
         $this->withMeta($this->resolveConfigValues());
+    }
+
+
+    /**
+     * Hydrate the given attribute on the model based on the incoming request.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  string  $requestAttribute
+     * @param  object  $model
+     * @param  string  $attribute
+     * @return void
+     */
+    protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
+    {
+        if ($this->meta['format'] == 'json' && $request->exists($requestAttribute)) {
+            $model->{$attribute} = json_decode($request[$requestAttribute], true) ?? $request[$requestAttribute];
+        } else {
+            parent::fillAttributeFromRequest($request, $requestAttribute, $model, $attribute);
+        }
+    }
+
+    public function format(string $format = null)
+    {
+        return $this->withMeta([
+            'format' => $format
+        ]);
     }
 
     public function height(int $height)
