@@ -72,7 +72,7 @@ return [
         "drawPolyline" => true, // adds button to draw a polyline
         "drawRectangle" => true, // adds button to draw a rectangle
         "drawPolygon" => true, // adds button to draw a polygon
-        "drawCircle" => true, // adds button to draw a cricle
+        "drawCircle" => true, // adds button to draw a circle
         "cutPolygon" => true, // adds button to cut a hole in a polygon
         "editMode" => true, // adds button to toggle edit mode for all layers
         "removalMode" => true, // adds a button to remove layers
